@@ -1,0 +1,116 @@
+`elixir`
+
+cards!
+create_deck
+shuffle
+deal
+contains?
+save
+load
+
+functional programming is a different paradigm.
+
+your computer>elixir>Mix
+
+mix is a developement tool?
+can generate, compile, runs tasks, manages dependencies
+
+`mix new cards`
+-creates new project `cards`
+`Cards`
+`Cards.hello()`///`Cards.hello`
+
+module is a collection of methods or functions
+
+`iex -S mix`
+- enters elixir prompt
+`
+
+implicit return
+-whenever a function runs, the LAST value run will be returned
+neat
+
+single quotes are supported, but double quotes are standard
+
+in elixir prompt/shell - `recompile` - will make changes available
+
+functional vs oop!
+well, no properties.
+so in oop, a deck would have a deck class and a card class. the deck would be a list of cards with some custom methods, like shuffle, save, whatever.
+
+in functional
+you'd have a cards module containing all the methods, but they'll all need explicit inputs and returns
+so, string in, string out
+
+error checks UndefinedFunctionError
+Module.method/2 = "we received the method with 2 arguments"
+
+interesting, the number of arguments relates to method definition. you can have the same method name used for 2 methods with different numbers of args
+
+arity = number of functions
+method/3 = arity 3
+
+pretty standard standard library approach, looks like.
+Enum module has a shuffle method.
+Enum.shuffle([array])
+no `import` necessary.
+
+interesting, array is immutable so shuffle returns a COPY of the original...not object.
+
+contains method-simple boolean check on arrays.
+
+`?` are valid in method names. they do not impart functionality, but will indicate a True/False return.
+
+truthy/falsey...
+
+shit yes, comprehensions
+-inherently mapping function
+--means the operations for each do block get mapped to a new array. already knew that.
+`for n <- [1,2,3,4], do: n * n`
+same as [n** for n in [1,2,3,4]] in python
+
+DIFFERENCE BETWEEN LISTS AND ARRAYS!
+list = linked list
+
+  def create_deck do
+    values = ["Ace","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Jack","Queen","King"]
+    suits = ["Spades","Hearts","Diamonds","Clubs"]
+    
+    for suit <- suits do
+      for value <- values do
+        "#{value} of #{suit}"
+      end
+    end
+  end
+  ^^^WRONG! creates an array containing 4 arrays of 13 cards. could just add to instead of insert.
+  List.flatten(deck) works but is hacky. better to just generate what you want from the start.
+
+  huh, this works?
+    for suit <- suits, value <- values do: operations
+  weird. translates to for suit in suits and value in values.
+
+concatenation
+"Hello " <> name
+interpolation
+"Hello #{name}"
+
+"importance of index with tuples"
+oh shit!
+okay, need to spell this out.
+implicit returns mean that the last value is automatically returned.
+some functions return multiple values
+so, if you end a method with a function with multiple returns it will return a tuple containing both values.
+tuples are indicated by {}, unlike python.
+this is familiar.
+
+can you use python style assignment?
+    hand, deck = function that returns two values()
+You Can!
+    { hand, rest_of_deck } = Cards.deal(deck, 5)
+
+you can't use index assignment.
+    hand = function that returns 2 values()[0] - BREAKS!
+    -iiiinteresting. access calls for keywords (function return) expect the key to be an atom
+atoms are new!
+
+tuple is ordered. are arrays/lists not ordered? Shit, they might not be.

@@ -1,0 +1,134 @@
+pattern matching is huge.
+Pattern Matching is elixir's replacement for variable assignment!
+okay, so you want to match the structure.
+tuple = tuple.
+pattern matching is used EVERY TIME you use the equals sign (assignment, not comparison)(maybe comparison)?
+
+oooh.
+color = ["red"]
+    color = ["red"]
+[color] = ["red"]
+    color = "red"
+That is pretty cool.
+
+[color]=["red","blue"]
+BREAKS EVERYTHING! (MatchError)
+
+on to saving the created deck.
+
+code we write<
+    {gets fed into}
+<elixir<
+    {gets transpiled into}
+<erlang<
+    {is compiled and executed}
+<beam
+
+erlang is a solution for huge telecom companies?
+think of elixir as a dialect for erlang.
+
+Bogdans/Bjorns
+Erlang
+Abstract
+Machine
+
+the point being that some functionality that elixir doesn't implement itself
+so, occasionally you'll have to write erlang.
+
+it should be minimal but understand what's happening and why.
+trivial. just preface erlange code with
+`:erlang`
+so,
+`:erlang.term_to_binary(deck)`
+
+more matching!
+
+File.read(invalid file path)
+-(ArgumentError) :erlang.binary_to_term(:enoent)
+--enoent = Error No Entity (of course)
+
+aha!
+:ok
+:error
+etc.
+are the mysterious ATOM type!
+
+so File.read returns a status (atom type!) and a read value
+in most languages it would be 
+if status != :error
+    stuff
+
+can't do that in elixir.
+huh, want to avoid if statements as much as possible.
+can use case though? weird.
+
+  def load(filename) do
+    {status, binary} = File.read(filename)
+
+    case status do
+      :ok -> :erlang.binary_to_term binary
+      :error -> "File Does Not Exist!"
+    end
+  end
+
+  yeah, don't see how that's different from an if statement yet.
+
+
+pattern matching in case statements
+atoms!
+atoms are used to control status codes and messages
+think of them like strings. only difference is that atoms should be internal.
+most common are
+:ok
+:error
+
+ooh, you can pattern match hardcoded values
+["red", color] = ["red","blue"]
+returns a bool?
+motherfucker is this an if statement?
+yep.
+["red",color] = ["blue","blue"]
+raises a (MatchError) and BLOCKS color assignment.
+
+yeah, this is cool
+
+  def load(filename) do
+    case File.read(filename) do
+      {:ok, binary} -> :erlang.binary_to_term binary
+      {:error, _reason} -> "File Does Not Exist!"
+    end
+  end
+    ^^^involves check and assignment at the same time!
+    note that reason is being assigned the error message, but we don't care what it is, just that it was raised
+    therefore, we preface the variable name reason with a single underscore, which tells elixir that we don't care what it is.
+    this blocks the warning about not using variables.
+
+
+pipe operator
+probably similar to bash scripting?
+
+`|>` specifically
+when you use the pipe operator you no longer have to assign to a temporary deck variable
+instead the result of each method is passed on to the next function in the chain
+
+    Cards.create_deck
+    |> Cards.shuffle
+    |> Cards.deal(hand_size)
+
+    ^^^ note deal(hand_size)
+    deal takes 2 arguments, so it's automatically passed the result from shuffle, and then we manually give it it's second argument
+    this might become an issue. think about what you'll be passing manually and what you'll be assigning when writing functions
+    i doubt there's a way to pass an argument before the automatic value from the pipe
+
+    module documentation
+
+
+install xdoc!
+when you created the module using mix, it created a file called `mix.exs`
+add to `defp deps do`
+    the line
+        `{:ex_doc, "~> 0.12"}`
+        where :ex_doc = the package name you want
+        where "0.12" = the version you want. -hm. installed a version later than 0.12. might be a minimum version?
+then run
+    `mix deps.get` in cmd

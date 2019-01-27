@@ -1,0 +1,86 @@
+Intro to Structs!
+
+store model level data?
+map which stores default values and some compile time stuff
+
+to make a struct we'll need a new module in lib.
+name it image.ex
+    contains
+    ```
+    defmodule Identicon.Image do
+        defstruct hex: nil
+    end
+    ```
+    this creates a new module named Identicon.Image
+
+`%Identicon.Image{}`
+-%Identicon.Image{hex: nil}
+
+`%Identicon.Image{hex: []}`
+-%Identicon.Image{hex: []}
+
+so the main thing is that a struct ONLY contains the fields you put into the module
+so, by convention, use a struct if you know what all the fields will be
+
+yeah so this looks like an object, and therefore looks like a good place to stick methods.
+NO. it's just a map under the hood, and it cannot store methods.
+
+    [r, g, b] = hex_list (hex_list is a list containing 16 entries)
+    [r, g, b]
+    ERRORS OUT, we're trying to match 3 entries to 16 entries!
+    fix with [r, g, b | _tail] = hex_list
+    _tail is just a variable. prepended with an underscore here to mark that we don't care about it
+
+[1,2,3,4,5,6,7]
+|> Enum.Chunk(3)
+
+is equivalent to Enum.Chunk([1,2,3,4,5,6,7],3)?
+Enum.Chunk takes an enum and puts the data it contains into chunks
+so chunk size 3, depicted above, will return
+[[1,2,3],[4,5,6]]
+note that the seven is lost, no incomplete chunks are stored
+
+basic bit of knowledge
+list ++ list will concatenate. [1,2,3]++[5,6,7] == [1,2,3,5,6,7]
+
+IN ADDITION TO THE MAP DATATYPE
+elixir can map functions to lists, exactly like python
+Enum.map()
+
+there's also a filter function, which is also JUST LIKE THE PYTHON ONE
+Enum.filter([1,2,3], fn(x) -> rem(x,2) == 0 end)
+^^^ also includes anonymous function!
+so you pass filter a list, and a function returning True or False based on the item passed into it
+filter passes all items in the list through it, and returns a list of everything true
+
+
+
+shiiiit
+[1,2,3]
+|> Enum.map(mirror_row)
+
+
+[1,2,3]
+|> Enum.map(&mirror_row/1)
+
+ampersand says we're passing REFERENCE to a function
+/1 means arity 1, which is the only version of this function we've created
+
+IMPORTANT
+    |> Enum.with_index
+takes an anonymous list and adds an index!
+['red','green','blue'] becomes [{'red', 0},{'green', 1},{'blue', 2}]
+
+MODULUS
+rem(number, divisor)
+
+rem(13,2) == 1
+
+SHIT!
+0 == true
+0 === False
+^^^this is elixir not having a good idea of truthy
+
+erlang egd = erlang graphical drawer
+egd.create()
+egd.filledRectangle(image, point, point, color) you give it a top-left pointer as origin and a bottom right pointer as terminus, and it creates a colored rectangle sized to those coordinates

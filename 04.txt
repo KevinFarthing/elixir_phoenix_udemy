@@ -1,0 +1,38 @@
+introduction to maps
+collections of key value pairs. dictionaries.
+colors = %{primary: "red", secondary: "blue"}
+waht type is the key?
+
+You can access values with dot notation and pattern matching!
+dot notation
+  color = colors.primary
+  will make color = "red"
+pattern matching
+  %{secondary: secondary_color} = colors #where colors is the map from line 3
+  will make secondary_color = blue. it grabs the secondary key from colors, and instantiates the secondary color from it!
+
+UPDATING maps is tricky?
+colors.primary = "blue"
+Compile Error!
+
+right, because it's immutable. that could get nasty with large maps
+so, you have to use the Maps module.
+
+Map.put(map, key we want to update AS ATOM, new value)
+Map.put(colors, :primary, "blue")
+since immutable, returns a new map with the specified change
+
+this will do the same thing with pattern matching
+new_map = %{ old_map | key:"new_value}
+
+hm, there's a gotcha.
+%{ old_map | key:"new_value}
+will NOT WORK for adding a new key:value pair, only for updating an existing one.
+
+Introduction to Keyword Lists
+colors = [{:primary, "red"}, {:secondary, "green"}]
+oh, tricky, will look like a key value pair, but it's still stored as tuples
+
+huh, and you can duplicate tuples. of course you can!
+
+ecto is a querying deal!

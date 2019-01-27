@@ -1,0 +1,85 @@
+xdoc documentation time.
+pretty cool that it makes an html file.
+
+it will automatically grab the name of all methods inside the module, and if there are any function docs it will include them in the html!
+
+
+2 types of documentation with xdoc
+module documentation - summary of the entire module
+function documentation - explanation of individual functions
+
+similar to python. at the top of the module!
+  @moduledoc """
+    provides methods for creating and handling a deck
+  """
+
+and, function docs
+  @doc """
+    Divids a deck into a hand and a remainder of the deck (returns {hand, deck})
+    pass in a deck and a `hand_size`.
+  """
+
+  xdoc text contained in backticks -> `, will be put in a code box thing. you know what it is.
+
+expension to function docs!
+  @doc """
+    Divids a deck into a hand and a remainder of the deck (returns {hand, deck})
+    pass in a deck and a `hand_size`.
+
+## Examples
+      iex> deck = Cards.create_deck
+      iex> {hand, deck} = Cards.deal(deck,1)
+      iex> hand
+      ["Ace of Spades"]
+  """
+the double pound signs (##) and triple tabs are important!
+eh.
+it's
+```
+text
+```
+in slack
+which, actually, is pretty cool.
+
+holy shit! testing is BUILT IN!
+so when we generated the module it created a `test` directory
+it contains
+    {module_name}_test.exs - used to write specific tests for the module
+    test_helper.exs - global setup
+
+`mix test`
+runs tests. simple as that?
+runs tests included in the tests directory, as
+  test "the truth" do
+    assert 1+1 == 2
+  end
+
+test replaces def.
+
+holy shit
+that sample code we included in the docstring, under `##`?
+THAT'S A TEST
+THE TESTER USES THAT AS A TEST
+this is the line that does it, in cards_test.exs
+
+  `doctest Cards`
+
+##
+      iex> deck = Cards.create_deck
+      iex> Cards.contains?(deck, "Ace of Spades")
+      true
+tests that Cards.contains returns true.
+
+those are all called doc tests
+
+the other type is called a case test, and they're written directely into cards_test.exs
+just define them like a function using
+    test "name" do
+        assert thing == thing OR refute thing == thing
+    end
+
+wtf
+iex> "1test2" == "test"
+false
+iex> "1test2" =~ "test"
+true

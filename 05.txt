@@ -1,0 +1,12 @@
+identicons, i guess.
+
+what, they're not random? they're generated in part based on string input?
+
+string->
+compute md5 hash of string->
+list numbers based on string->
+pick a color->
+build grid of squares->
+convert grid into image->
+save image
+
