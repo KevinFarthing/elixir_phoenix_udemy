@@ -84,3 +84,15 @@ SHIT!
 erlang egd = erlang graphical drawer
 egd.create()
 egd.filledRectangle(image, point, point, color) you give it a top-left pointer as origin and a bottom right pointer as terminus, and it creates a colored rectangle sized to those coordinates
+
+Enum.each is sort of like Enum.map, but while map returns a new connection, each is only in processing
+
+!!!
+egd.filledRectangle BREAKS IMMUTABILITY???
+
+snap, :egd isn't included in elixir anymore?
+by default?
+can get by using
+     {:egd, github: "erlang/egd"} -> add to dependencies
+      # mix local.rebar --force t -> run on term
+      # mix deps.get -> run on term
