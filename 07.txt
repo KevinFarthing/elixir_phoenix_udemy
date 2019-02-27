@@ -1,0 +1,4 @@
+mix phx.new NAME
+^^^generates a new project
+
+postgres -D /usr/local/var/postgres
