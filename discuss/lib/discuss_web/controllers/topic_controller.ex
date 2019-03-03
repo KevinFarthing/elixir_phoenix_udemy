@@ -1,12 +1,14 @@
 defmodule DiscussWeb.TopicController do
    use DiscussWeb, :controller
 
+#    alias Discuss.Topic
+
     def new(conn, params) do
-        IO.puts "+++"
-        IO.inspect conn
-        IO.puts "+++"
-        IO.inspect params
-        IO.puts "+++"
+        # struct = %DiscussWeb.Topic{}
+        # 1.4 means i don't know which is whiiiiich
+        struct = %Discuss.Topic{}
+        params = %{}
+        changeset = Discuss.Topic.Changeset(struct, params)
     end
 
     # def create() do

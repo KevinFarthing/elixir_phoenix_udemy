@@ -1,0 +1,45 @@
+shit, no more models
+replaced with "contexts"
+it's MVC, not CVC, dammit! CVC sounds like a type of cheap plastic tube!
+
+moving on
+
+the basic idea of models is that your app doesn't know how your database is structured. the model defines their interactions.
+
+deprecated but probably still useful
+defmodule Discuss.Topic do
+    use Discuss, :model
+
+    schema "topics" do
+        field :title, :string
+    end
+
+    def changeset(struct, params \\ %{}) do
+        struct
+        |> cast(params, [:title])
+        |> validate_required([:title])
+    end
+
+    # okay, struct will be used to designate the data STRUCTURE OF THE DATABASE (we want to save in the database)WRONG. in this instance it's a struct with one entry
+    # it could be however many. they just match the database columns. duh.
+    # not duh - the params is a hash of what we want to update the struct with. why?
+    # ah, because the params are the changes. the struct is the layout and maybe original data
+    # cast produces a changeset - a changeset is an object that records the updates. so yeah, struct is the layout, the params are the changes
+    # validators add errors to the changeset. breaks if shit don't work
+    # changeset executes the changeset.
+    ^^^defines a schema with a field name and datatype (title and string)
+
+
+standard oop validation
+define a topic class with a validate method
+but we don't have classes
+
+
+more on changesets.
+there is a changeset function and also a changeset object. what the fuck is going on with calling it an object, this ain't python. VERBOTEN
+
+oooh! default values
+python has def name(param="default");
+
+elixir has def name(params \\ %{}) do
+which sets params equal to an empty map
