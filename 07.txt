@@ -2,3 +2,39 @@ mix phx.new NAME
 ^^^generates a new project
 
 postgres -D /usr/local/var/postgres
+
+mix phoenix.server
+^^^starts server
+neat, live updates
+
+
+SERVER SIDE TEMPLATING
+vs
+SINGLE PAGE APPS
+
+in server side, user visits page, http request to server, server generates html document, user clicks a link, http request to server, server generates doc, etc
+
+in single page, user visits page, http request to server, server generates html document,react/angular boots up and shows the page, user clicks a link, react angular shows new content
+
+DIFFERENCE IS IN THE TOTALITY - single page only loads changes!
+this sounds like an advantage.
+
+templates vs. layouts
+pretty standard. layouts are full page descriptors, templates are anything that follows a form factor, including templates and modules and what have you.
+
+basic ecto syntax for the new migration
+  def change do
+    create table(:topics) do
+      add :title, :string
+  end
+
+  creates a table named topics with a field named title containing a string data type
+  where the hell are the constraints?
+huh, didn't create the table...
+
+  need a new url : add a new route in the router field
+  new routes must map to a method in controller : add a new method to handle the request
+  need to show a form to the user : make a new template containing the form
+  need to translate data in the form to something that can be saved in database : create a topic model that can translate raw data from the form into sql
+  the controller and view that we have are related to page but we need to relate to topic : make a new controller and view to handle everything related to topics
+

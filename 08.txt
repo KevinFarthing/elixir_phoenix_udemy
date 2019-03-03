@@ -1,0 +1,112 @@
+mvc stuff
+
+the muffin analogy?
+3 components
+the batter - the base components
+the pan - the tool that shapes the components into a recognizable shape
+the cook - overseeing the process
+
+the model is the raw data. totally unsuitable for user consumption
+the view is the format that makes the model look good
+figures out what the user is looking for, grabs the correct model, stuffs it into the correct view
+
+request is a user requesting something from the server
+
+shit, joomla is in my brain
+
+# router data -> directs to the correct controller
+  scope "/", DiscussWeb do
+    pipe_through :browser
+
+    get "/", PageController, :index
+    # references the page controller controller
+  end
+
+  ^^^ creates the root route, or joomla menu.
+
+# the page controller -> has to render both the view and the templates?
+  defmodule DiscussWeb.PageController do
+  use DiscussWeb, :controller
+
+  def index(conn, _params) do
+    render(conn, "index.html")
+  end
+end
+^^^ to create the controller you make a module, with a function defining how we serve up html (or whatever)
+
+views vs templates
+
+# view
+defmodule DiscussWeb.PageView do
+  use DiscussWeb, :view
+end
+
+a migration is a set of instructions?
+
+cool, you tell mix what kind of data you need in the database and it generates a migration file to implement
+
+mix ecto.gen.migration add_topics
+
+generates a file at root/priv/repo/migrations which is prepended with a timestamp!
+this is good because it will tell phoenix what order to run the migrations
+
+
+    get "/topics/new", TopicController, :new
+
+weird. get request, got it. "topics/new" url, fine, TopicController is the controller, :new is the function though?
+
+
+intent
+action
+controller function
+
+see the form to create a topic
+GET '/topics/new'
+new
+
+submit the form to create a topic
+POST '/topics'
+create
+
+get a list of all topics
+get '/topics'
+index
+
+delete a topic with id of 12
+DELETE '/topics/12' # not topics/delete?id=12
+delete
+
+see the form to update an existing topic with id 12
+PUT '/topics/12'
+edit
+
+submit the form to update a topic with id 12
+PUT '/topics/12'
+update
+
+^^^pretty standard conventions
+
+i'm somewhat uncomfortable with controller naming conventions
+router references CamelCased name, file is snake_cased, file contains CamelCased controller
+
+by convention, controllers will be named as the singular
+
+
+error message
+function DiscussWeb.TopicController.init/1 is undefined (module DiscussWeb.TopicController is not available)
+
+
+keywords
+ import: takes all functions from module and adds them to other module
+ alias: give a shortcut to this other module, to reduce typing
+ use: what? apparently its stupid complicated
+
+ alias - if elixir detects a function it doesn't recognize it will search through your modules for the function
+
+ looks like aliases have been replaced by namespaces
+
+ ugh. Conn is a struct
+ conn-struct
+ Conn is the focal point for every request that is made
+
+ so by default the get request end functions take 2 paramsj
